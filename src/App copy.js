@@ -17,8 +17,6 @@ export default function App() {
     );
 }
 
-//  <-- Steps Closing Button --/>
-
 function StepsClosingButton({ setIsOpen }) {
     return (
         <button
@@ -30,8 +28,6 @@ function StepsClosingButton({ setIsOpen }) {
     );
 }
 
-//  <-- Steps Card --/>
-
 function StepsCard() {
     let [step, setStep] = useState(1);
 
@@ -39,14 +35,12 @@ function StepsCard() {
         <div className="steps">
             <NumbersRow step={step} />
 
-            <StepMessage step={step}>{messages[step - 1]}</StepMessage>
+            <StepMessage step={step} />
 
             <StepsButtons step={step} setStep={setStep} />
         </div>
     );
 }
-
-//  <-- Numbers Row --/>
 
 function NumbersRow({ step }) {
     return (
@@ -58,55 +52,54 @@ function NumbersRow({ step }) {
     );
 }
 
-//  <-- Steps Message --/>
-
-function StepMessage({ step, children }) {
+function StepMessage({ step }) {
     return (
-        <div className="message">
-            <h3>Step {step}</h3>
-            {children}
-        </div>
+        <p className="message">
+            Step {step}: {messages[step - 1]}
+        </p>
     );
 }
-
-//  <-- Steps Buttons --/>
 
 function StepsButtons({ step, setStep }) {
     let buttonStyle = { backgroundColor: "#7950f2", color: "#fff" };
 
     return (
         <div className="buttons">
-            <Button
-                textColor={buttonStyle.color}
-                bgColor={buttonStyle.backgroundColor}
-                onClick={() => step > 1 && setStep((step) => step - 1)}
-                text="Previous"
-                emoji="👈"
-            >
-                👈 Previous
-            </Button>
+            <PreviousButton
+                buttonStyle={buttonStyle}
+                step={step}
+                setStep={setStep}
+            />
 
-            <Button
-                textColor={buttonStyle.color}
-                bgColor={buttonStyle.backgroundColor}
-                onClick={() => step < 3 && setStep((step) => step + 1)}
-                text={""}
-                emoji="👉"
-            >
-                Next 👉🤓
-            </Button>
+            <NextButton
+                buttonStyle={buttonStyle}
+                step={step}
+                setStep={setStep}
+            />
         </div>
     );
 }
 
-function Button({ textColor, bgColor, onClick, children }) {
+function PreviousButton({ buttonStyle, step, setStep }) {
     return (
         <button
             className="button"
-            style={{ color: textColor, backgroundColor: bgColor }}
-            onClick={onClick}
+            style={buttonStyle}
+            onClick={() => step > 1 && setStep((step) => step - 1)}
         >
-            {children}
+            Previous
+        </button>
+    );
+}
+
+function NextButton({ buttonStyle, step, setStep }) {
+    return (
+        <button
+            className="button"
+            style={buttonStyle}
+            onClick={() => step < 3 && setStep((step) => step + 1)}
+        >
+            Next
         </button>
     );
 }
